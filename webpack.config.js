@@ -1,3 +1,4 @@
+const path = require('path');
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const CopyPlugin = require("copy-webpack-plugin");
 
@@ -8,13 +9,11 @@ const htmlPlugin = new HtmlWebPackPlugin({
 
 module.exports = {
     mode: "development",
+    entry: path.resolve(__dirname, 'src', 'index.tsx'),
     module: {
         rules: [
             {
                 test: [/\.(js|jsx)$/, /test\.js$/],
-                resolve: {
-                    extensions: [".js", ".jsx", ".ts", ".tsx"],
-                },
                 use: {
                     loader: "babel-loader",
                 },
@@ -30,14 +29,17 @@ module.exports = {
             },
             {
                 test: /\.png$/,
-
+                
                 loader: "file-loader",
-
+                
                 options: {
                     names: "[path][name].[hash].[ext]",
                 },
             },
         ],
+    },
+    resolve: {
+        extensions: [".js", ".jsx", ".ts", ".tsx"],
     },
     plugins: [htmlPlugin],
 };
